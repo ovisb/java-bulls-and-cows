@@ -34,6 +34,11 @@ Bulls and Cows CLI game application.
 - Each digit from the string is between 0-9 and is unique
 - Completed stage 3
 
+07.11.2023
+- Added main game loop
+- Game will continue until the digit is found (or when the number of bulls is equal to the length of the secret word)
+- Completed stage 4
+
 ## Changelog
 
 ## Project status
