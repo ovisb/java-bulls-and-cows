@@ -12,6 +12,7 @@ Purpose of the project is to learn Java OOP basics and to get more familiar with
 ## Project description
 Bulls and Cows CLI game application.
 
+## Changelog
 07.11.2023
 - Created repo
 - Started stage 1
@@ -39,8 +40,10 @@ Bulls and Cows CLI game application.
 - Game will continue until the digit is found (or when the number of bulls is equal to the length of the secret word)
 - Completed stage 4
 
-## Changelog
+07.11.2023
+- refactored the previous solution for creating the secret code to using existing java methods like the `Math.random()`
+- Completed stage 5
 
 ## Project status
 
-Completed 3/7 stages
+Completed 5/7 stages

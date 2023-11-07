@@ -57,9 +57,9 @@ class BullsCows {
         }
     }
 
-    private boolean checkUniqueDigit(StringBuilder secret, int i, String num) {
-        for (int j = 0; j < secret.length() ; j++) {
-            if (num.charAt(i) == secret.charAt(j)) {
+    private boolean checkUniqueDigit(StringBuilder secret, int index, StringBuilder digits) {
+        for (int i = 0; i < secret.length(); i++) {
+            if (secret.charAt(i) == digits.charAt(index)) {
                 return false;
             }
         }
@@ -67,32 +67,26 @@ class BullsCows {
     }
 
     private StringBuilder generateSecret(int secretLength) {
+        StringBuilder digits = new StringBuilder("0123456789");
         StringBuilder secret = new StringBuilder();
 
-        loop: while (true) {
-            String num = String.valueOf(System.nanoTime());
+        while (secret.length() != secretLength) {
+            boolean unique = true;
 
-            for (int i = num.length() - 1; i >= 0; i--) {
-                boolean unique = true;
+            int index = (int) (digits.length() * Math.random());
 
-                // first digit is not allowed to be 0
-                if (secret.isEmpty()) {
-                    if (num.charAt(i) == '0') {
-                        continue;
-                    }
-                }
-
-                unique = checkUniqueDigit(secret, i, num);
-
-                if (unique) {
-                    secret.append(num.charAt(i));
-                } else {
+            // first digit is not allowed to be 0
+            if (secret.isEmpty()) {
+                if (digits.charAt(index) == '0') {
                     continue;
                 }
+            }
 
-                if (secret.length() == secretLength) {
-                    break loop;
-                }
+            unique = checkUniqueDigit(secret, index, digits);
+
+            if (unique) {
+                secret.append(digits.charAt(index));
+                digits.deleteCharAt(index);
             }
         }
         return secret;
