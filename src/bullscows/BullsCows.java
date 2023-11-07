@@ -28,9 +28,59 @@ class BullsCows {
     }
 
     public void play() {
-        String userInput = scanner.nextLine();
-        findBullCow(userInput);
+//        String userInput = scanner.nextLine();
+//        findBullCow(userInput);
+        int secretLength = scanner.nextInt();
+        if (secretLength > 10 || secretLength <= 0) {
+            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
+            return;
+        }
+
+        System.out.printf("The random secret number is: %s", generateSecret(secretLength));
+
     }
+
+    private boolean checkUniqueDigit(StringBuilder secret, int i, String num) {
+        for (int j = 0; j < secret.length() ; j++) {
+            if (num.charAt(i) == secret.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private StringBuilder generateSecret(int secretLength) {
+        StringBuilder secret = new StringBuilder();
+
+        loop: while (true) {
+            String num = String.valueOf(System.nanoTime());
+
+            for (int i = num.length() - 1; i >= 0; i--) {
+                boolean unique = true;
+
+                // first digit is not allowed to be 0
+                if (secret.isEmpty()) {
+                    if (num.charAt(i) == '0') {
+                        continue;
+                    }
+                }
+
+                unique = checkUniqueDigit(secret, i, num);
+
+                if (unique) {
+                    secret.append(num.charAt(i));
+                } else {
+                    continue;
+                }
+
+                if (secret.length() == secretLength) {
+                    break loop;
+                }
+            }
+        }
+        return secret;
+    }
+
 
     public void getResults() {
         if (bulls > 0 && cows > 0) {

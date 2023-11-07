@@ -26,8 +26,16 @@ Bulls and Cows CLI game application.
 - After player tries to guess the word, program will print out a graded result.
 - Complete stage 2
 
+07.11.2023
+- Started stage 3
+- Removed predefined secret code
+- Added method for creating a pseudo-random string digit
+- It has a max length of 10 and a min length of 1
+- Each digit from the string is between 0-9 and is unique
+- Completed stage 3
+
 ## Changelog
 
 ## Project status
 
-Completed 2/7 stages
+Completed 3/7 stages
