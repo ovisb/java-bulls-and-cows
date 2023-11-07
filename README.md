@@ -18,8 +18,16 @@ Bulls and Cows CLI game application.
 - Printed predefined game log
 - Completed stage 1
 
+07.11.2023
+- Started stage 2
+- Implemented game skeleton
+- Get number from the user and check it on a predefined (temp) 4 digit secret number.
+- Compare the two numbers, a correctly guessed digit is a cow, and if its position is also correct, then it's a bull.
+- After player tries to guess the word, program will print out a graded result.
+- Complete stage 2
+
 ## Changelog
 
 ## Project status
 
-Completed 1/7 stages
+Completed 2/7 stages
