@@ -26,19 +26,21 @@ class BullsCows {
     }
 
     private void resetValues() {
-        cows = 0;
-        bulls = 0;
+        this.cows = 0;
+        this.bulls = 0;
     }
 
     public void play() {
-        System.out.println("Please, enter the secret code's length:");
+        System.out.println("Input the length of the secret code:");
         int secretLength = scanner.nextInt();
-        if (secretLength > 10 || secretLength <= 0) {
-            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
-            return;
-        }
-        StringBuilder secredCode = generateSecret(secretLength);
-//        System.out.printf("Secret code is %s%n", secredCode);
+//        if (secretLength > 10 || secretLength <= 0) {
+//            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
+//            return;
+//        }
+        System.out.println("Input the number of possible symbols in the code:");
+        int amountOfSymbols = scanner.nextInt();
+        StringBuilder secretCode = generateSecret(secretLength, amountOfSymbols);
+//        System.out.printf("Secret code is %s%n", secretCode);
         System.out.println("Okay, let's start a game!");
 
         int i = 1;
@@ -46,10 +48,10 @@ class BullsCows {
         while (true) {
             System.out.printf("Turn %d:%n", i++);
             String userInput = sc.nextLine();
-            findBullCow(secredCode, userInput);
+            findBullCow(secretCode, userInput);
             getResults();
 
-            if (bulls == secredCode.length()) {
+            if (bulls == secretCode.length()) {
                 System.out.println("Congratulations! You guessed the secret code.");
                 return;
             }
@@ -66,30 +68,58 @@ class BullsCows {
         return true;
     }
 
-    private StringBuilder generateSecret(int secretLength) {
-        StringBuilder digits = new StringBuilder("0123456789");
+    private StringBuilder possibleSymbols() {
+        StringBuilder symbols = new StringBuilder();
+
+        for (int i = 0; i <= 9; i++) {
+            symbols.append(i);
+        }
+
+        for (char ch = 'a'; ch <= 'z'; ch ++) {
+            symbols.append(ch);
+        }
+
+        return symbols;
+    }
+
+    private StringBuilder generateSecret(int secretLength, int amountOfSymbols) {
+        StringBuilder possibleSymbols = possibleSymbols();
+        StringBuilder hideSecret = new StringBuilder(secretLength);
+        hideSecret.append("*".repeat(secretLength));
+
+        StringBuilder digits = new StringBuilder(amountOfSymbols);
+        for (int i = 0; i < amountOfSymbols; i++) {
+            digits.append(possibleSymbols.charAt(i));
+        }
         StringBuilder secret = new StringBuilder();
 
         while (secret.length() != secretLength) {
-            boolean unique = true;
+            boolean unique;
 
             int index = (int) (digits.length() * Math.random());
-
-            // first digit is not allowed to be 0
-            if (secret.isEmpty()) {
-                if (digits.charAt(index) == '0') {
-                    continue;
-                }
-            }
 
             unique = checkUniqueDigit(secret, index, digits);
 
             if (unique) {
                 secret.append(digits.charAt(index));
-                digits.deleteCharAt(index);
             }
         }
+        friendlyPrintSecretMessage(digits, hideSecret);
         return secret;
+    }
+
+    private void friendlyPrintSecretMessage(StringBuilder digits, StringBuilder hideSecret) {
+        if (digits.length() > 10) {
+            char firstNum = digits.charAt(0);
+            char endNum = digits.charAt(9);
+            char firstLetter = digits.charAt(10);
+            char lastLetter = digits.charAt(digits.length() - 1);
+            System.out.printf("The secret is prepared: %s (%c-%c, %s-%s).%n", hideSecret, firstNum, endNum, firstLetter, lastLetter);
+        } else {
+            char firstNum = digits.charAt(0);
+            char endNum = digits.charAt(digits.length() - 1);
+            System.out.printf("The secret is prepared: %s (%c-%c).%n", hideSecret, firstNum, endNum);
+        }
     }
 
 
