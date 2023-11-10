@@ -12,6 +12,17 @@ Purpose of the project is to learn Java OOP basics and to get more familiar with
 ## Project description
 Bulls and Cows CLI game application.
 
+The game works in the following way:
+- Input length for the generated secret word
+  - Secret word can be generated from `0-9` and lowercase latin letters `a-z`
+- Input how many letters it should use for generating the secret ( max 36 )
+- Game starts
+  - try and guess the secret
+  - if you guess the letter you get 1 cow
+  - if it's position in the secret is also correct, you get 1 bull
+- Game ends when you guess the secret word ( number of bulls is equal to the length of the secret word ).
+- Have fun!
+
 ## Changelog
 07.11.2023
 - Created repo
@@ -50,6 +61,10 @@ Bulls and Cows CLI game application.
 - e.g `The secret is prepared: **** (0-9, a-f).`
 - Completed stage 6
 
+10.11.2023
+- Added error handling for various user inputs
+- Completed stage 7
+
 ## Project status
 
-Completed 6/7 stages
+Completed 7/7 stages

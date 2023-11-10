@@ -1,5 +1,6 @@
 package bullscows;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class BullsCows {
@@ -30,15 +31,42 @@ class BullsCows {
         this.bulls = 0;
     }
 
+    private int getInput(String message) throws InputMismatchException {
+        System.out.println(message);
+        String num = scanner.nextLine();
+        int number;
+        try {
+            number = Integer.parseInt(num);
+        } catch (NumberFormatException e) {
+            System.out.printf("Error: %s isn't a valid number.", num);
+            throw e;
+        }
+
+        return number;
+    }
+
     public void play() {
-        System.out.println("Input the length of the secret code:");
-        int secretLength = scanner.nextInt();
-//        if (secretLength > 10 || secretLength <= 0) {
-//            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
-//            return;
-//        }
-        System.out.println("Input the number of possible symbols in the code:");
-        int amountOfSymbols = scanner.nextInt();
+        int secretLength;
+        int amountOfSymbols;
+
+        try {
+            secretLength = getInput("Input the length of the secret code:");
+            amountOfSymbols = getInput("Input the number of possible symbols in the code:");
+
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        if (secretLength > amountOfSymbols) {
+            System.out.printf("Error: it's not possible to generate a code with a length of %s with %s unique symbols.", secretLength, amountOfSymbols);
+            return;
+        }
+
+        if (secretLength <= 0 || (amountOfSymbols > 36 || amountOfSymbols <= 0)) {
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+            return;
+        }
+
         StringBuilder secretCode = generateSecret(secretLength, amountOfSymbols);
 //        System.out.printf("Secret code is %s%n", secretCode);
         System.out.println("Okay, let's start a game!");
@@ -48,6 +76,10 @@ class BullsCows {
         while (true) {
             System.out.printf("Turn %d:%n", i++);
             String userInput = sc.nextLine();
+            if (userInput.length() < secretLength || userInput.length() > secretLength) {
+                System.out.println("input cannot be higher / lesser the then secret length. Try again.");
+                continue;
+            }
             findBullCow(secretCode, userInput);
             getResults();
 
